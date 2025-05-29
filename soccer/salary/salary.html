@@ -1,0 +1,104 @@
+<!doctype html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>薪资分析</title>
+
+  <!-- Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet" />
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <!-- tippy.js CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />
+  <!-- 自定义 CSS -->
+  <link rel="stylesheet" href="scatterplot_style.css" />
+  <link rel="stylesheet" href="wage.css" />
+
+</head>
+
+<body>
+  <!-- 导航栏 -->
+  <nav class="navbar">
+      <a href="dashboard.html" class="active">首页</a>
+      <a href="../sphere_graph/sphere.html">贡献度3D可视化</a>
+      <a href="../salary/salary.html">球员薪资分析</a>
+      <a href="../salary/salary_ratio.html">性价比分析</a>
+  </nav>
+  <div class="container-fluid px-4 py-3">
+    <!-- 可以随便删改 - 崔元皙 -->
+    <h1 class="text-center text-4xl font-bold mb-5">薪资可视化直方图</h1>
+
+    <!-- 上边三个过滤器-->
+    <div class="row mb-4">
+      <div class="col-sm-4">
+        <h4>Team</h4>
+        <select id="team-filter" class="form-select" onchange="dataManipulation()">
+          <option value="All">All</option>
+        </select>
+      </div>
+      <div class="col-sm-4">
+        <h4>Position</h4>
+        <select id="position-filter" class="form-select" onchange="dataManipulation()">
+          <option value="All">All</option>
+        </select>
+      </div>
+      <div class="col-sm-4">
+        <h4>Country</h4>
+        <select id="country-filter" class="form-select" onchange="dataManipulation()">
+          <option value="All">All</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- 下边四个过滤器 -->
+    <div class="row mb-4">
+      <div class="col-sm-3">
+        <h4>Top N</h4>
+        <select id="top-n-filter" class="form-select" onchange="dataManipulation()">
+          <option value="TOP N">TOP N</option>
+          <option value="Top 10">Top 10</option>
+          <option value="Top 20">Top 20</option>
+          <option value="Top 30">Top 30</option>
+        </select>
+      </div>
+      <div class="col-sm-3">
+        <h4>Wage Type</h4>
+        <select id="wage-type-filter" class="form-select" onchange="dataManipulation()">
+          <option value="Annual">Annual Wages</option>
+          <option value="Weekly">Weekly Wages</option>
+        </select>
+      </div>
+      <div class="col-sm-3">
+        <h4>Order By</h4>
+        <select id="order-by-filter" class="form-select" onchange="dataManipulation()">
+          <option value="descend">Descend</option>
+          <option value="ascend">Ascend</option>
+        </select>
+      </div>
+      <div class="col-sm-3">
+        <h4>Wage Level</h4>
+        <select id="wage-level-filter" class="form-select" onchange="dataManipulation()">
+          <option value="All">All Levels</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- 画图 -->
+    <div id="chart-area" class="chart-container bg-gray-50 border rounded p-4"></div>
+    <div id="fixed-y-axis"></div>
+  </div>
+
+  <!-- JS 工具包，保持顺序一致 -->
+  <script src="d3.v7.min.js"></script>
+  <script src="d3-tip.min.js"></script>
+  <script src="https://unpkg.com/@popperjs/core@2"></script>  <!-- Popper.js는 tippy 의존 -->
+  <script src="https://unpkg.com/tippy.js@6"></script>
+  <script src="wage_player_data.js"></script>
+  <script src="wage_barchart.js"></script>
+  <script src="wage_main.js"></script>
+
+</body>
+
+</html>

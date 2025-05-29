@@ -1,0 +1,267 @@
+<!-- player.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virgil van Dijk - 球员详情</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="radar_graph.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <a href="dashboard.html" class="active">首页</a>
+        <a href="../sphere_graph/sphere.html">贡献度3D可视化</a>
+        <a href="../salary/salary.html">球员薪资分析</a>
+        <a href="../salary/salary_ratio.html">性价比分析</a>
+    </nav>
+
+    <div class="player-container">
+        <a href="dashboard.html" class="back-btn">&larr; 返回</a>
+
+        <!-- 头部信息卡 -->
+        <div class="player-card">
+            <div class="player-basic">
+                <img src="https://fbref.com/req/202302030/images/headshots/e06683ca_2022.jpg" class="player-avatar" id="player-img">
+                <div class="basic-info">
+                    <h1 id="player-name">Virgil van Dijk</h1>
+                    <div class="meta-grid">
+                        <div class="meta-item">
+                            <label>位置</label>
+                            <span id="player-pos"></span>
+                        </div>
+                        <div class="meta-item">
+                            <label>年龄</label>
+                            <span id="player-age"></span>
+                        </div>
+                        <div class="meta-item">
+                            <label>身高</label>
+                            <span id="player-height">195cm</span>
+                        </div>
+                        <div class="meta-item">
+                            <label>国籍</label>
+                            <span id="player-country">荷兰</span>
+                        </div>
+                        <div class="meta-item">
+                            <label>球队</label>
+                            <span id="player-team">利物浦</span>
+                        </div>
+                        <div class="meta-item">
+                            <label>年薪</label>
+                            <span id="player-wage">£11,440,000</span>
+                        </div>
+                    </div>
+                </div>
+                <img src="https://cdn.ssref.net/req/202505011/tlogo/fb/822bd0ba.png" class="team-logo">
+            </div>
+
+            <!-- 核心指标 -->
+            <div class="core-stats">
+                <!-- 非守门员指标 -->
+                <div class="non-gk-stats">
+                    <div class="stat">
+                        <div class="stat-value" id="sh_xG"></div>
+                        <div class="stat-label">预期进球</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="pas_Cmp%"></div>
+                        <div class="stat-label">传球成功率</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="def_Int"></div>
+                        <div class="stat-label">拦截次数</div>
+                    </div>
+                </div>
+
+                <!-- 守门员指标 -->
+                <div class="gk-stats hidden">
+                    <div class="stat">
+                        <div class="stat-value" id="SavePct"></div>
+                        <div class="stat-label">扑救成功率</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="OPA"></div>
+                        <div class="stat-label">出击次数</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="StpPct"></div>
+                        <div class="stat-label">拦截传中率</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 雷达图 -->
+        <div class="radar-section">
+            <div class="filter-container">
+                <div style="margin-bottom: 10px;"><strong>Player 1</strong></div>
+                <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                <label>Team 1: <select class="dropdown" id="team1"></select></label>
+                <label>Position 1: <select class="dropdown" id="pos1"></select></label>
+                <label>Player 1: <select class="dropdown" id="player1"></select></label>
+                </div>
+                <div style="margin-bottom: 10px;"><strong>Player 2</strong></div>
+                <div style="display: flex; gap: 10px;">
+                <label>Team 2: <select class="dropdown" id="team2"></select></label>
+                <label>Position 2: <select class="dropdown" id="pos2"></select></label>
+                <label>Player 2: <select class="dropdown" id="player2"></select></label>
+                </div>
+            </div>
+
+            <div id="svgWrapper">
+                <svg class="radarChart"></svg>
+                <button id="resetZoomFixed">图像复位</button>
+            </div>
+
+            <div id="tooltip"></div>
+
+            <script src="d3.v7.min.js"></script>
+            <script src="radar_graph.js"></script>
+        </div>
+
+        <!-- 数据表格 -->
+        <div class="stats-tabs">
+            <div class="tab-nav">
+                <button class="tab-active" data-tab="basic">基础数据</button>
+                <button data-tab="attack">进攻表现</button>
+                <button data-tab="passing">传球数据</button>
+                <button data-tab="defense">防守数据</button>
+                <button data-tab="possession">持球数据</button>
+                <button class="hidden" data-tab="goalkeeping">守门数据</button>
+            </div>
+
+            <div class="tab-content" id="basic">
+                <div class="stat-row">
+                    <span>出场时间(90分钟单位)</span>
+                    <span id="90s">32.0</span>
+                </div>
+                <div class="stat-row">
+                    <span>身高</span>
+                    <span id="height">195cm</span>
+                </div>
+                <div class="stat-row">
+                    <span>年龄</span>
+                    <span id="age">33</span>
+                </div>
+            </div>
+
+            <!-- 非守门员数据 -->
+            <div class="tab-content" id="attack">
+                <div class="stat-row">
+                    <span>射正次数</span>
+                    <span id="sh_SoT">7.0</span>
+                </div>
+                <div class="stat-row">
+                    <span>射正率</span>
+                    <span id="sh_SoT%">33.3%</span>
+                </div>
+                <div class="stat-row">
+                    <span>每次射门进球</span>
+                    <span id="sh_G/Sh">0.1</span>
+                </div>
+                <div class="stat-row">
+                    <span>总射门</span>
+                    <span id="sh_Sh">21.0</span>
+                </div>
+                <div class="stat-row">
+                    <span>平均射门距离</span>
+                    <span id="sh_Dist">13.2米</span>
+                </div>
+            </div>
+
+            <div class="tab-content" id="passing">
+                <div class="stat-row">
+                    <span>传球成功数</span>
+                    <span id="pas_Cmp">2294</span>
+                </div>
+                <div class="stat-row">
+                    <span>推进传球距离</span>
+                    <span id="pas_PrgDist">16438米</span>
+                </div>
+                <div class="stat-row">
+                    <span>总传球距离</span>
+                    <span id="pas_TotDist">41794米</span>
+                </div>
+                <div class="stat-row">
+                    <span>关键传球</span>
+                    <span id="pas_KP">10</span>
+                </div>
+                <div class="stat-row">
+                    <span>进攻三区传球</span>
+                    <span id="pas_1/3">245</span>
+                </div>
+            </div>
+
+            <div class="tab-content" id="defense">
+                <div class="stat-row">
+                    <span>抢断尝试</span>
+                    <span id="def_Tkl">34</span>
+                </div>
+                <div class="stat-row">
+                    <span>抢断成功</span>
+                    <span id="def_TklW">16</span>
+                </div>
+                <div class="stat-row">
+                    <span>抢断成功率</span>
+                    <span id="def_Tkl%">55%</span>
+                </div>
+                <div class="stat-row">
+                    <span>解围</span>
+                    <span id="def_Clr">165</span>
+                </div>
+                <div class="stat-row">
+                    <span>防守失误</span>
+                    <span id="def_Err">4</span>
+                </div>
+                <div class="stat-row">
+                    <span>封堵</span>
+                    <span id="def_Blocks">22</span>
+                </div>
+            </div>
+
+            <div class="tab-content" id="possession">
+                <div class="stat-row">
+                    <span>带球成功</span>
+                    <span id="pos_Succ">3</span>
+                </div>
+                <div class="stat-row">
+                    <span>带球成功率</span>
+                    <span id="pos_Succ%">60%</span>
+                </div>
+                <div class="stat-row">
+                    <span>推进带球距离</span>
+                    <span id="pos_PrgDist">4219米</span>
+                </div>
+                <div class="stat-row">
+                    <span>推进带球次数</span>
+                    <span id="pos_PrgC">18</span>
+                </div>
+                <div class="stat-row">
+                    <span>总持球次数</span>
+                    <span id="pos_Carries">1589</span>
+                </div>
+            </div>
+
+            <!-- 守门员数据 -->
+            <div class="gk-stats hidden">
+                <div class="stat">
+                    <div class="stat-value" id="SavePct"></div>
+                    <div class="stat-label">扑救成功率</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="OPA"></div>
+                    <div class="stat-label">出击次数</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="StpPct"></div>
+                    <div class="stat-label">拦截传中率</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="player.js"></script>
+</body>
+</html>

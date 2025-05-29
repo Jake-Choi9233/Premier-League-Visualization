@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Player Visualization</title>
+    <script src="three.min.js"></script>
+    <script src="OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+        #container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        #team-select {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            padding: 12px 20px;
+            font-size: 16px;
+            max-width: 200px;
+        }
+        #info-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+            max-width: 300px;
+        }
+        #filters {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            width: 250px;
+        }
+        .filter-group {
+            margin-bottom: 15px;
+        }
+        .filter-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        select {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        .contribution-range {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .contribution-range input {
+            width: 80px;
+        }
+        .player-info {
+            margin-bottom: 10px;
+        }
+        .player-info img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        #sunburst-container {
+            position: absolute;
+            left: 30%;
+            top: -200%;
+            width: 600px;
+            height: 600px;
+            z-index: 10;
+            background: rgba(255,255,255);
+            border-radius: 50%;
+            pointer-events: auto;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .toggle-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        .visualization-label {
+            font-weight: bold;
+            color: #333;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+        body {
+            overflow-y: scroll;
+        }
+        #container {
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div class="toggle-container">
+            <span class="visualization-label">Sphere</span>
+            <label class="toggle-switch">
+                <input type="checkbox" id="visualization-toggle">
+                <span class="slider"></span>
+            </label>
+            <span class="visualization-label">Sunburst</span>
+        </div>
+        <div id="filters">
+            <div class="filter-group">
+                <label>Position:</label>
+                <select id="position-filter">
+                    <option value="ALL">ALL</option>
+                    <option value="FW">FW</option>
+                    <option value="MF">MF</option>
+                    <option value="DF">DF</option>
+                    <option value="GK">GK</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Point:</label>
+                <select id="point-filter">
+                    <option value="ALL">ALL</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Contribution Range:</label>
+                <div class="contribution-range">
+                    <input type="number" id="min-contribution" min="0" max="100" value="0" step="1">
+                    <span>to</span>
+                    <input type="number" id="max-contribution" min="0" max="100" value="100" step="1">
+                </div>
+            </div>
+            <div class="filter-group">
+                <label>Contribution Rank Range:</label>
+                <div class="contribution-range">
+                    <input type="number" id="min-rank" min="1" value="1" step="1">
+                    <span>to</span>
+                    <input type="number" id="max-rank" min="1" value="500" step="1">
+                </div>
+            </div>
+        </div>
+        <select id="team-select">
+            <option value="">Select a team</option>
+        </select>
+        <div id="info-panel"></div>
+        <div id="sunburst-container"></div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+    <script type="module" src="sunburst.js"></script>
+    <script>
+        document.getElementById('visualization-toggle').addEventListener('change', function(e) {
+            const sunburstContainer = document.getElementById('sunburst-container');
+            const sphereContainer = document.getElementById('container');
+            const filters = document.getElementById('filters');
+            const teamSelect = document.getElementById('team-select');
+
+            if (e.target.checked) {
+                // Show Sunburst
+                sunburstContainer.style.opacity = '1';
+                sunburstContainer.style.top = '20%';
+                sphereContainer.style.opacity = '1';
+                filters.style.opacity = '1';
+                teamSelect.style.opacity = '1';
+            } else {
+                // Show Sphere
+                sunburstContainer.style.opacity = '0';
+                sunburstContainer.style.top = '-200%';
+                sphereContainer.style.opacity = '1';
+                filters.style.opacity = '1';
+                teamSelect.style.opacity = '1';
+            }
+        });
+    </script>
+</body>
+</html>

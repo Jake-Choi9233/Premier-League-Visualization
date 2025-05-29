@@ -1,0 +1,443 @@
+/* style.css */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --background: #ecf0f1;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    background: var(--background);
+}
+
+/* 导航栏样式 */
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    font-size: 17px;
+    transition: 0.3s;
+}
+
+/* 鼠标悬停效果 */
+.navbar a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+/* 当前页面高亮 */
+.navbar a.active {
+    background-color: #04AA6D;
+    color: white;
+}
+
+/* 响应式设计 - 移动端适配 */
+@media screen and (max-width: 600px) {
+    .navbar a {
+        float: none;
+        display: block;
+        text-align: left;
+    }
+}
+
+/* 主体内容（避免被导航栏遮挡） */
+.content {
+    margin-top: 60px;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.team-selector {
+    width: 200px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 2px solid var(--primary-color);
+    border-radius: 5px;
+}
+
+.team-info {
+    width: 200px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 2px solid var(--primary-color);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.pitch-container {
+    position: relative;
+    background: #2ecc71;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.pitch-bg {
+    width: 100%;
+    opacity: 0.8;
+}
+
+#player-markers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.player-marker {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid white;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.player-marker:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.player-detail {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    width: 80%;
+    max-width: 800px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.player-header {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.player-avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid var(--secondary-color);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.stat-card {
+    background: var(--background);
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.radar-container {
+    width: 400px;
+    height: 400px;
+    margin: 0 auto;
+}
+
+.hidden {
+    display: none;
+}
+
+.player-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.back-btn {
+    color: #3498db;
+    text-decoration: none;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    display: inline-block;
+}
+
+.player-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 2rem;
+    display: grid;
+    gap: 2rem;
+}
+
+.player-basic {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 2rem;
+}
+
+.player-avatar {
+    width: 200px;
+    height: 200px;
+    border-radius: 15px;
+    object-fit: cover;
+}
+
+.meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.meta-item {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.meta-item label {
+    display: block;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.core-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.non-gk-stats {
+    display: grid;
+    grid-template-columns: repeat(3);
+    gap: 1rem;
+}
+
+/* .gk-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+} */
+
+.stat {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.radar-section {
+    margin: 3rem 0;
+    padding: 2rem;
+    background: white;
+    border-radius: 15px;
+}
+
+.stats-tabs {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+}
+
+.tab-nav {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.tab-nav button {
+    background: none;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.tab-active {
+    border-bottom: 3px solid #3498db;
+    font-weight: bold;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.player-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.back-btn {
+    color: #3498db;
+    text-decoration: none;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    display: inline-block;
+}
+
+.player-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 2rem;
+    display: grid;
+    gap: 2rem;
+}
+
+.player-basic {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 2rem;
+}
+
+.player-avatar {
+    width: 200px;
+    height: 200px;
+    border-radius: 15px;
+    object-fit: cover;
+}
+
+.meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.meta-item {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.meta-item label {
+    display: block;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.core-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.stat {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.radar-section {
+    margin: 3rem 0;
+    padding: 2rem;
+    background: white;
+    border-radius: 15px;
+}
+
+.stats-tabs {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+}
+
+.tab-nav {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.tab-nav button {
+    background: none;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.tab-active {
+    border-bottom: 3px solid #3498db;
+    font-weight: bold;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.position-line {
+  position: absolute;
+  background: rgba(255,255,255,0.2);
+  height: 2px;
+}
+
+.df-line { /* 后防线 */
+  width: 30%;
+  left: 15%;
+  top: 28%;
+}
+
+.mf-line { /* 中场线 */
+  width: 40%;
+  left: 30%;
+  top: 48%;
+}
+
+.fw-line { /* 锋线 */
+  width: 30%;
+  left: 55%;
+  top: 68%;
+}
+
+.player-marker {
+  transition: all 0.3s ease;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
