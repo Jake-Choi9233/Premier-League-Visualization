@@ -4,14 +4,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     const playerName = params.get('name');
 
     const data = await d3.json('players_data.json');
+    const GK_Data = await d3.json('GK_Data.json');
     const player = data.find(p => p.player === decodeURIComponent(playerName));
+    const GK_player = GK_Data.find(p => p.player === decodeURIComponent(playerName));
 
     if (player) {
         console.log('Player data:', player);
         renderPlayerInfo(player);
         // drawRadarChart(player);
-    }
-    else {
+    } else if (GK_player) {
+        console.log('GK data:', GK_player);
+        renderGKInfo(GK_player);
+    } else {
         console.error('Player not found:', playerName);
         document.querySelector('.player-container').innerHTML = '<p>未找到该球员信息</p>';
     }
@@ -34,7 +38,27 @@ function renderPlayerInfo(player) {
     document.getElementById('height').textContent = `${player.height}cm`;
     document.getElementById('age').textContent = player.age;
 
+    // 切换 Tab 逻辑
+    const tabs = document.querySelectorAll('.tab-nav button');
+    const contents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('tab-active'));
+            tab.classList.add('tab-active');
+
+            const target = tab.getAttribute('data-tab');
+            contents.forEach(content => {
+                content.classList.toggle('tab-active', content.id === target);
+            });
+        });
+    });
+
     if (player.pos !== 'GK') {
+        // 隐藏守门员 Tab
+        document.querySelector('[data-tab="goalkeeping"]').classList.add('hidden');
+        document.querySelector('.gk-stats').classList.add('hidden');
+
         // 核心指标
         document.getElementById('sh_xG').textContent = player.sh_xG.toFixed(1);
         document.getElementById('pas_Cmp%').textContent = `${player['pas_Cmp%']}%`;
@@ -71,10 +95,18 @@ function renderPlayerInfo(player) {
     } else {
         // 隐藏非守门员元素
         document.querySelector('.non-gk-stats').classList.add('hidden');
-        document.querySelector('[data-tab="goalkeeping"]').classList.remove('hidden');
+        document.querySelector('[data-tab="attack"]').style.display = 'none';
+        document.querySelector('[data-tab="defense"]').style.display = 'none';
+        document.querySelector('[data-tab="possession"]').style.display = 'none';
+        document.querySelector('[id="attact"]').classList.add('hidden');
 
         // 显示守门员元素
+        document.querySelector('[data-tab="goalkeeping"]').classList.remove('hidden');
         document.querySelector('.gk-stats').classList.remove('hidden');
+
+        document.getElementById('SavePct') = player.SavePct;
+        document.getElementById('OPA') = player.OPA;
+        document.getElementById('StpPct') = player.StpPct;
     }
 
     // function translatePosition(pos) {

@@ -211,7 +211,7 @@ function renderBarChart(playerData) {
     images.join(
         enter => enter.append("image")
             .attr("class", "player-image")
-            .attr("href", d => d.image || "./薪资可视化图_js/smile.jpg")
+            .attr("href", d => d.image || "smile.jpg")
             .attr("y", d => yScale(d[wageKey]) - imageSize - 10)
             .attr("x", d => xScale(d.Player) + (barWidth / 2) - (imageSize / 2))
             .attr("width", imageSize)

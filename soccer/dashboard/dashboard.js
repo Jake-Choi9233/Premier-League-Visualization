@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // 加载数据
     d3.json('players_data.json').then(data => {
         allPlayers = preprocessData(data);
-        // allGK = preprocessData(d3.json('GK_Data.json'), true);
         initTeamSelector();
         setupEventListeners();
     });
@@ -155,105 +154,105 @@ document.addEventListener('DOMContentLoaded', () => {
                     .attr('src', d => d.player_img)
                     .style('left', d => `${d.position.x}%`)
                     .style('top', d => `${d.position.y}%`)
-                    .on('click', (e, d) => {window.open(`player.html?name=${encodeURIComponent(d.player)}`, '_blank');}),
+                    .on('click', (e, d) => {window.open(`player.html?name=${encodeURIComponent(d.Player)}`, '_blank');}),
                 update => update,
                 exit => exit.remove()
         );
     }
 
-    function showPlayerDetail(player) {
-        const detailContainer = document.getElementById('player-detail');
-        detailContainer.classList.remove('hidden');
+    // function showPlayerDetail(player) {
+    //     const detailContainer = document.getElementById('player-detail');
+    //     detailContainer.classList.remove('hidden');
 
-        // 更新基本信息
-        const header = `
-            <img src="${player.player_img}" class="player-avatar">
-            <div class="player-info">
-                <h1>${player.player}</h1>
-                <p>${player.age}岁 | ${player.height}cm</p>
-                <div class="team-info">
-                    <img src="${player.squad_img}" class="team-logo">
-                    <span>${player.squad}</span>
-                </div>
-            </div>
-        `;
-        document.querySelector('.player-header').innerHTML = header;
+    //     // 更新基本信息
+    //     const header = `
+    //         <img src="${player.player_img}" class="player-avatar">
+    //         <div class="player-info">
+    //             <h1>${player.player}</h1>
+    //             <p>${player.age}岁 | ${player.height}cm</p>
+    //             <div class="team-info">
+    //                 <img src="${player.squad_img}" class="team-logo">
+    //                 <span>${player.squad}</span>
+    //             </div>
+    //         </div>
+    //     `;
+    //     document.querySelector('.player-header').innerHTML = header;
 
-        // 绘制雷达图
-        drawRadarChart(player);
+    //     // 绘制雷达图
+    //     drawRadarChart(player);
 
-        // 更新统计数据
-        const statsHtml = `
-            <div class="stat-card">
-                <h3>射门</h3>
-                <p>${player.sh_SoT} 射正</p>
-                <small>预期进球 ${player.sh_xG}</small>
-            </div>
-            <div class="stat-card">
-                <h3>传球</h3>
-                <p>${player.pas_Cmp} 成功</p>
-                <small>成功率 ${player.pas_Cmp}%</small>
-            </div>
-            <div class="stat-card">
-                <h3>防守</h3>
-                <p>${player.def_Int} 拦截</p>
-                <small>${player.def_Tkl} 抢断</small>
-            </div>
-        `;
-        document.querySelector('.stats-grid').innerHTML = statsHtml;
-    }
+    //     // 更新统计数据
+    //     const statsHtml = `
+    //         <div class="stat-card">
+    //             <h3>射门</h3>
+    //             <p>${player.sh_SoT} 射正</p>
+    //             <small>预期进球 ${player.sh_xG}</small>
+    //         </div>
+    //         <div class="stat-card">
+    //             <h3>传球</h3>
+    //             <p>${player.pas_Cmp} 成功</p>
+    //             <small>成功率 ${player.pas_Cmp}%</small>
+    //         </div>
+    //         <div class="stat-card">
+    //             <h3>防守</h3>
+    //             <p>${player.def_Int} 拦截</p>
+    //             <small>${player.def_Tkl} 抢断</small>
+    //         </div>
+    //     `;
+    //     document.querySelector('.stats-grid').innerHTML = statsHtml;
+    // }
 
-    function drawRadarChart(player) {
-        const width = 400, height = 400;
-        const radarContainer = d3.select('.radar-container').html('');
+    // function drawRadarChart(player) {
+    //     const width = 400, height = 400;
+    //     const radarContainer = d3.select('.radar-container').html('');
 
-        const svg = radarContainer.append('svg')
-            .attr('width', width)
-            .attr('height', height);
+    //     const svg = radarContainer.append('svg')
+    //         .attr('width', width)
+    //         .attr('height', height);
 
-        const axes = Object.keys(player.radarMetrics);
-        const maxValues = {
-            aerial: 100,
-            passing: 100,
-            defense: 100,
-            physical: 100,
-            attack: 100,
-            special: 100
-        };
+    //     const axes = Object.keys(player.radarMetrics);
+    //     const maxValues = {
+    //         aerial: 100,
+    //         passing: 100,
+    //         defense: 100,
+    //         physical: 100,
+    //         attack: 100,
+    //         special: 100
+    //     };
 
-        // 绘制雷达图轴
-        axes.forEach((axis, i) => {
-            const angle = (Math.PI * 2 * i) / axes.length;
-            const x = width/2 + Math.cos(angle) * 180;
-            const y = height/2 + Math.sin(angle) * 180;
+    //     // 绘制雷达图轴
+    //     axes.forEach((axis, i) => {
+    //         const angle = (Math.PI * 2 * i) / axes.length;
+    //         const x = width/2 + Math.cos(angle) * 180;
+    //         const y = height/2 + Math.sin(angle) * 180;
 
-            svg.append('line')
-                .attr('x1', width/2)
-                .attr('y1', height/2)
-                .attr('x2', x)
-                .attr('y2', y)
-                .style('stroke', '#ddd');
+    //         svg.append('line')
+    //             .attr('x1', width/2)
+    //             .attr('y1', height/2)
+    //             .attr('x2', x)
+    //             .attr('y2', y)
+    //             .style('stroke', '#ddd');
 
-            svg.append('text')
-                .attr('x', x + Math.cos(angle)*10)
-                .attr('y', y + Math.sin(angle)*10)
-                .text(axis.toUpperCase())
-                .style('font-size', '12px');
-        });
+    //         svg.append('text')
+    //             .attr('x', x + Math.cos(angle)*10)
+    //             .attr('y', y + Math.sin(angle)*10)
+    //             .text(axis.toUpperCase())
+    //             .style('font-size', '12px');
+    //     });
 
-        // 绘制数据多边形
-        const points = axes.map((axis, i) => {
-            const value = (player.radarMetrics[axis] / maxValues[axis]) * 180;
-            const angle = (Math.PI * 2 * i) / axes.length;
-            return [
-                width/2 + Math.cos(angle) * value,
-                height/2 + Math.sin(angle) * value
-            ];
-        });
+    //     // 绘制数据多边形
+    //     const points = axes.map((axis, i) => {
+    //         const value = (player.radarMetrics[axis] / maxValues[axis]) * 180;
+    //         const angle = (Math.PI * 2 * i) / axes.length;
+    //         return [
+    //             width/2 + Math.cos(angle) * value,
+    //             height/2 + Math.sin(angle) * value
+    //         ];
+    //     });
 
-        svg.append('polygon')
-            .attr('points', points.join(' '))
-            .style('fill', 'rgba(52, 152, 219, 0.3)')
-            .style('stroke', '#3498db');
-    }
+    //     svg.append('polygon')
+    //         .attr('points', points.join(' '))
+    //         .style('fill', 'rgba(52, 152, 219, 0.3)')
+    //         .style('stroke', '#3498db');
+    // }
 });

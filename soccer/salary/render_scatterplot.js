@@ -263,7 +263,7 @@ function renderScatterPlot(playerData, globalZMin, globalZMax) {
     zoomLayer.selectAll(".scatter-point").each(function(d) {
         const tooltipContent = `
             <div class="tooltip-wrapper">
-                <img src="${d.image || './薪资可视化图_js/smile.jpg'}" width="80" height="80" style="border-radius: 50%; margin-bottom: 6px; display: block; margin-left: auto; margin-right: auto;" />
+                <img src="${d.image || 'smile.jpg'}" width="80" height="80" style="border-radius: 50%; margin-bottom: 6px; display: block; margin-left: auto; margin-right: auto;" />
                 <div><strong>${d.Player}</strong></div>
                 <div>Position: ${d.DPos}</div>
                 <div>Squad: ${d.Squad}</div>

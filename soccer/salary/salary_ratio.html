@@ -17,12 +17,13 @@
 <body>
   <!-- 导航栏 -->
   <nav class="navbar">
-      <a href="dashboard.html" class="active">首页</a>
+      <a href="../dashboard/dashboard.html" class="active">首页</a>
       <a href="../sphere_graph/sphere.html">贡献度3D可视化</a>
       <a href="../salary/salary.html">球员薪资分析</a>
       <a href="../salary/salary_ratio.html">性价比分析</a>
   </nav>
-  <div class="container-fluid px-4 py-3">
+
+  <div class="content"><div class="container-fluid px-4 py-3">
     <h1 class="text-center text-4xl font-bold mb-5">性价比散点图</h1>
 
     <div class="row mb-4">
@@ -69,9 +70,11 @@
       </div>
     </div>
 
+    <p>每一个点都代表真实的球员。分界线由数据回归得出</p>
+
     <div id="chart-area" class="chart-container bg-gray-50 border rounded p-4"></div>
     <div id="fixed-y-axis"></div>
-  </div>
+  </div></div>
 
   <script src="d3.v7.min.js"></script>
   <script src="d3-tip.min.js"></script>

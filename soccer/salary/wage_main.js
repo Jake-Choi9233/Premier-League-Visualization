@@ -11,7 +11,7 @@ function preprocessData(data) {
         ...player,
         "Annual Wages": Number(player["Annual Wages"]),
         "weekly_wages": Number(player["weekly_wages"]),
-        "image": player["image"] || "./薪资可视化图_js/smile.jpg"
+        "image": player["image"] || "smile.jpg"
     }));
 }
 

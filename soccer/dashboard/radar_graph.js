@@ -39,10 +39,10 @@
     if (position !== 'All') {
       svg.append('text')
         .attr('x', 0)
-        .attr('y', -rScale(val))
+        .attr('y', -rScale(val)+6)
         .attr('dy', '-0.3em')
-        .attr('fill', '#666')
-        .attr('font-size', '10px')
+        .attr('fill', 'black')
+        .attr('font-size', '11px')
         .text(val);
     }
   }
@@ -67,8 +67,9 @@
       .attr('y', (d, i) => rScale(105) * Math.sin(angleSlice * i - Math.PI / 2))
       .text(d => d)
       .style('text-anchor', 'middle')
-      .style('font-size', '11px')
-      .style('fill', '#333');
+      .style('font-size', '17px')
+      .style('fill', '#black')
+      .style('font-weight', 'bold');
   }
 }
 
@@ -153,7 +154,8 @@ const initialTransform = d3.zoomIdentity.translate(300, 300);
     ]).then(([fpData, gkData]) => {
       currentData = [...parseData(fpData), ...parseData(gkData)];
       initFilters(position);
-      parsePlayer
+      parsePlayer();
+      drawChart();
     });
   } else {
     const file = position === 'GK' ? 'GK_Data.json' : 'players_data.json';
@@ -161,6 +163,7 @@ const initialTransform = d3.zoomIdentity.translate(300, 300);
       currentData = parseData(data);
       initFilters(position);
       parsePlayer();
+      drawChart();
     });
   }
 }
@@ -521,7 +524,7 @@ drawTeamLogo(name1);
       const y = rScale(105) * Math.sin(angleSlice * i - Math.PI / 2);
       svg.append('text')
         .attr('class','diff-label')
-        .attr('x', x + 30)
+        .attr('x', x + 45)
         .attr('y', y)
         .attr('fill', diff > 0 ? 'blue' : 'red')
         .text(txt);

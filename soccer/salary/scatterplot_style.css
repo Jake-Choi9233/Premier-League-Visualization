@@ -6,6 +6,7 @@
     top: 0;
     width: 100%;
     z-index: 1000;
+    padding-top: 20px;
 }
 
 .navbar a {
@@ -52,6 +53,13 @@
     max-width: 1600px;
     margin: 0 auto;
     padding-bottom: 20px;
+}
+
+.container-fluid p {
+    color: #666; /* 灰色文字 */
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
 }
 
 .chart-container {

@@ -5,14 +5,14 @@ body {
 .filter-container { margin: 10px; }
 .dropdown { margin-right: 20px; }
 .radarChart { width: 600px; height: 600px; border: 1px solid #ccc; background: #f9f9f9; }
-.axis line, .axis text { stroke: #ccc; fill: #666; font-size: 12px; }
+.axis line, .axis text { stroke: #ccc; fill: #000000; font-size: 12px; }
 .radar-area { fill: lightblue; fill-opacity: 0.5; pointer-events: none; }
 .radar-stroke { stroke: lightblue; fill: none; stroke-width: 2px; pointer-events: none; }
 .radar-circle { fill: lightblue; cursor: pointer; }
 .radar-area.compare2 { fill: lightcoral; fill-opacity: 0.3; }
 .radar-stroke.compare2 { stroke: lightcoral; }
 .radar-circle.compare2 { fill: lightcoral; }
-.diff-label { font-size: 10px; font-weight: bold; text-anchor: start; pointer-events: none; opacity: 0.45; }
+.diff-label { font-size: 14px; font-weight: bold; text-anchor: start; pointer-events: none; opacity: 0.45; }
 #tooltip {
   position: absolute;
   background: rgba(0,0,0,0.85);

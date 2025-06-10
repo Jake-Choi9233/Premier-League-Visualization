@@ -19,6 +19,7 @@ body {
     top: 0;
     width: 100%;
     z-index: 1000;
+    padding-top: 20px;
 }
 
 .navbar a {
@@ -87,6 +88,13 @@ body {
     background: #2ecc71;
     border-radius: 10px;
     overflow: hidden;
+}
+
+.container p {
+    color: #666; /* 灰色文字 */
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
 }
 
 .pitch-bg {

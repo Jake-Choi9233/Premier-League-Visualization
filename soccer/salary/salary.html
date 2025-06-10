@@ -21,12 +21,12 @@
 <body>
   <!-- 导航栏 -->
   <nav class="navbar">
-      <a href="dashboard.html" class="active">首页</a>
+      <a href="../dashboard/dashboard.html" class="active">首页</a>
       <a href="../sphere_graph/sphere.html">贡献度3D可视化</a>
       <a href="../salary/salary.html">球员薪资分析</a>
       <a href="../salary/salary_ratio.html">性价比分析</a>
   </nav>
-  <div class="container-fluid px-4 py-3">
+  <div class="content"><div class="container-fluid px-4 py-3">
     <!-- 可以随便删改 - 崔元皙 -->
     <h1 class="text-center text-4xl font-bold mb-5">薪资可视化直方图</h1>
 
@@ -85,10 +85,12 @@
       </div>
     </div>
 
+    <p>可以自定义你需要的数据范围。鼠标悬停时可以缩放，拖动平移。</p>
+
     <!-- 画图 -->
     <div id="chart-area" class="chart-container bg-gray-50 border rounded p-4"></div>
     <div id="fixed-y-axis"></div>
-  </div>
+  </div></div>
 
   <!-- JS 工具包，保持顺序一致 -->
   <script src="d3.v7.min.js"></script>

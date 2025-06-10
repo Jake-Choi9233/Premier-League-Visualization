@@ -7,12 +7,13 @@
     <title>Virgil van Dijk - 球员详情</title>
     <link rel="stylesheet" href="dashboard.css">
     <link rel="stylesheet" href="radar_graph.css">
+    <link rel="stylesheet" href="player.css"></link>"
     <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
     <!-- 导航栏 -->
     <nav class="navbar">
-        <a href="dashboard.html" class="active">首页</a>
+        <a href="../dashboard/dashboard.html" class="active">首页</a>
         <a href="../sphere_graph/sphere.html">贡献度3D可视化</a>
         <a href="../salary/salary.html">球员薪资分析</a>
         <a href="../salary/salary_ratio.html">性价比分析</a>
@@ -132,7 +133,8 @@
                 <button class="hidden" data-tab="goalkeeping">守门数据</button>
             </div>
 
-            <div class="tab-content" id="basic">
+            <!-- 基础数据 -->
+            <div class="tab-content tab-active" id="basic">
                 <div class="stat-row">
                     <span>出场时间(90分钟单位)</span>
                     <span id="90s">32.0</span>
@@ -245,7 +247,7 @@
             </div>
 
             <!-- 守门员数据 -->
-            <div class="gk-stats hidden">
+            <div class="tab-content gk-stats hidden">
                 <div class="stat">
                     <div class="stat-value" id="SavePct"></div>
                     <div class="stat-label">扑救成功率</div>

@@ -360,24 +360,21 @@ async function updatePlayerPositions (players) {
       // 计算这个纬度带内球员的贡献度最大值
       const maxConColor = Math.max(...players.map(p => parseFloat(p.Con_color)))
 
-      // 计算总经度贡献
-      const totalConLongitude = players.reduce((sum, p) => sum + parseFloat(p.Con_longitude), 0)
-
       // 从0度开始，依次分配经度范围
       let currentLongitude = 0
+      const totalLongitude = 360
+      const longitudePerPlayer = totalLongitude / players.length
 
       for (let i = 0; i < players.length; i++) {
         const player = players[i]
         const conColor = parseFloat(player.Con_color)
-        const conLongitude = parseFloat(player.Con_longitude)
 
         // 计算球员的经度范围
-        const longitudeRange = (conLongitude / totalConLongitude) * 360
         const startLongitude = currentLongitude
-        const endLongitude = startLongitude + longitudeRange
+        const endLongitude = startLongitude + longitudePerPlayer
 
         // 计算中心经度
-        const centerLongitude = startLongitude + longitudeRange / 2
+        const centerLongitude = startLongitude + longitudePerPlayer / 2
 
         // 计算球员在球体上的位置
         const longitudeRad = centerLongitude * (Math.PI / 180)
@@ -428,11 +425,9 @@ async function updatePlayerPositions (players) {
 
     // 计算每个位置的贡献度总和和最大值
     const maxConColors = {}
-    const totalConLongitudes = {}
     Object.keys(positions).forEach(pos => {
       const conColors = positions[pos].map(p => parseFloat(p.Con_color))
       maxConColors[pos] = Math.max(...conColors)
-      totalConLongitudes[pos] = positions[pos].reduce((sum, p) => sum + parseFloat(p.Con_longitude), 0)
     })
 
     // 为每个位置处理球员
@@ -442,19 +437,19 @@ async function updatePlayerPositions (players) {
 
       // 从0度开始，依次分配经度范围
       let currentLongitude = 0
+      const totalLongitude = 360
+      const longitudePerPlayer = totalLongitude / posPlayers.length
 
       for (let i = 0; i < posPlayers.length; i++) {
         const player = posPlayers[i]
         const conColor = parseFloat(player.Con_color)
-        const conLongitude = parseFloat(player.Con_longitude)
 
         // 计算球员的经度范围
-        const longitudeRange = (conLongitude / totalConLongitudes[pos]) * 360
         const startLongitude = currentLongitude
-        const endLongitude = startLongitude + longitudeRange
+        const endLongitude = startLongitude + longitudePerPlayer
 
         // 计算中心经度
-        const centerLongitude = startLongitude + longitudeRange / 2
+        const centerLongitude = startLongitude + longitudePerPlayer / 2
 
         // 计算球员在球体上的位置
         const longitudeRad = centerLongitude * (Math.PI / 180)
