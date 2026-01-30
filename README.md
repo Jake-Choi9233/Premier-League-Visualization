@@ -111,6 +111,3 @@ python -m http.server 8000
 ***
 
 ### ⭐ If this helped you win your mini-league, star this repo. It's free serotonin for devs.
-4. Badges 추가 (stars, license, build status 등)
-
-어떤 부분 수정하거나 추가할까?
