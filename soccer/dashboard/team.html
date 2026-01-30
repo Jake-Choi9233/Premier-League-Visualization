@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>球队详情</title>
+    <title>Team Details</title>
     <link rel="stylesheet" href="dashboard.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Space Grotesk', sans-serif;
             background-color: #f4f4f4;
             margin: 0;
             padding: 20px;
@@ -42,47 +42,75 @@
         .player-list {
             margin-top: 20px;
         }
+        .player-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 14px;
+        }
         .player-item {
-            display: flex;
+            display: grid;
+            grid-template-columns: 54px 1fr;
+            gap: 12px;
             align-items: center;
-            margin-bottom: 10px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
         }
         .player-item img {
-            width: 50px;
-            height: 50px;
+            width: 54px;
+            height: 54px;
             border-radius: 50%;
-            margin-right: 10px;
+            object-fit: cover;
+        }
+        .player-meta {
+            display: grid;
+            gap: 4px;
+        }
+        .player-name {
+            font-weight: 600;
+            color: #111827;
+        }
+        .player-sub {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        .player-stats {
+            display: grid;
+            gap: 2px;
+            font-size: 0.9rem;
+            color: #1f2937;
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
 </head>
 <body>
-    <!-- 导航栏 -->
+    <!-- Navigation -->
     <nav class="navbar">
-        <a href="dashboard.html" class="active">首页</a>
-        <a href="../sphere_graph/sphere.html">贡献度3D可视化</a>
-        <a href="../salary/salary.html">球员薪资分析</a>
-        <a href="../salary/salary_ratio.html">性价比分析</a>
+        <a href="dashboard.html" class="active">Dashboard</a>
+        <a href="../sphere_graph/sphere.html">Sphere / Sunburst</a>
+        <a href="../salary/salary.html">Wages</a>
+        <a href="../salary/salary_ratio.html">Cost-effectiveness</a>
     </nav>
 
     <div class="container">
         <div class="team-header">
-            <img id="team-logo" src="" alt="球队徽标">
+            <img id="team-logo" src="" alt="Team logo">
             <h1 id="team-name"></h1>
         </div>
         <div class="team-info">
-            <ul><li><strong>出场球员数:</strong> <span id="PI"></span></li>
-                <li><strong>球队薪资总额:</strong> <span id="squad-annual-wages"></span></li>
-                <li><strong>球队排名:</strong> <span id="team-ranking"></span></li>
+            <ul><li><strong>Players:</strong> <span id="PI"></span></li>
+                <li><strong>Total Annual Wages:</strong> <span id="squad-annual-wages"></span></li>
+                <li><strong>Team Ranking:</strong> <span id="team-ranking"></span></li>
             </ul>
         </div>
         <div class="player-list">
-            <h3>球队球员列表:</h3>
-            <div id="player-container"></div>
+            <h3>Team Roster:</h3>
+            <div id="player-container" class="player-grid"></div>
         </div>
     </div>
 
-    <!-- 引用新的 .js 文件 -->
+    <!-- JS -->
     <script src="team.js"></script>
 </body>
 </html>

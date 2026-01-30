@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>薪资分析</title>
+  <title>Wage Analysis</title>
 
   <!-- Tailwind CSS -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet" />
@@ -19,18 +19,17 @@
 </head>
 
 <body>
-  <!-- 导航栏 -->
+  <!-- Navigation -->
   <nav class="navbar">
-      <a href="../dashboard/dashboard.html" class="active">首页</a>
-      <a href="../sphere_graph/sphere.html">贡献度3D可视化</a>
-      <a href="../salary/salary.html">球员薪资分析</a>
-      <a href="../salary/salary_ratio.html">性价比分析</a>
+      <a href="../dashboard/dashboard.html" class="active">Dashboard</a>
+      <a href="../sphere_graph/sphere.html">Sphere / Sunburst</a>
+      <a href="../salary/salary.html">Wages</a>
+      <a href="../salary/salary_ratio.html">Cost-effectiveness</a>
   </nav>
   <div class="content"><div class="container-fluid px-4 py-3">
-    <!-- 可以随便删改 - 崔元皙 -->
-    <h1 class="text-center text-4xl font-bold mb-5">薪资可视化直方图</h1>
+    <h1 class="text-center text-4xl font-bold mb-5">Wage Distribution</h1>
 
-    <!-- 上边三个过滤器-->
+    <!-- Top filters -->
     <div class="row mb-4">
       <div class="col-sm-4">
         <h4>Team</h4>
@@ -52,7 +51,7 @@
       </div>
     </div>
 
-    <!-- 下边四个过滤器 -->
+    <!-- Bottom filters -->
     <div class="row mb-4">
       <div class="col-sm-3">
         <h4>Top N</h4>
@@ -85,17 +84,17 @@
       </div>
     </div>
 
-    <p>可以自定义你需要的数据范围。鼠标悬停时可以缩放，拖动平移。</p>
+    <p>Customize the data range. Scroll to zoom and drag to pan.</p>
 
-    <!-- 画图 -->
+    <!-- Chart -->
     <div id="chart-area" class="chart-container bg-gray-50 border rounded p-4"></div>
     <div id="fixed-y-axis"></div>
   </div></div>
 
-  <!-- JS 工具包，保持顺序一致 -->
+  <!-- JS (keep order) -->
   <script src="d3.v7.min.js"></script>
   <script src="d3-tip.min.js"></script>
-  <script src="https://unpkg.com/@popperjs/core@2"></script>  <!-- Popper.js는 tippy 의존 -->
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
   <script src="https://unpkg.com/tippy.js@6"></script>
   <script src="wage_player_data.js"></script>
   <script src="wage_barchart.js"></script>

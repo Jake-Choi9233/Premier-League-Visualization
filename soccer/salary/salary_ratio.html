@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>性价比回归分析</title>
+  <title>Cost-effectiveness Analysis</title>
 
   <!-- Tailwind CSS -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet" />
@@ -15,16 +15,16 @@
 </head>
 
 <body>
-  <!-- 导航栏 -->
+  <!-- Navigation -->
   <nav class="navbar">
-      <a href="../dashboard/dashboard.html" class="active">首页</a>
-      <a href="../sphere_graph/sphere.html">贡献度3D可视化</a>
-      <a href="../salary/salary.html">球员薪资分析</a>
-      <a href="../salary/salary_ratio.html">性价比分析</a>
+      <a href="../dashboard/dashboard.html" class="active">Dashboard</a>
+      <a href="../sphere_graph/sphere.html">Sphere / Sunburst</a>
+      <a href="../salary/salary.html">Wages</a>
+      <a href="../salary/salary_ratio.html">Cost-effectiveness</a>
   </nav>
 
   <div class="content"><div class="container-fluid px-4 py-3">
-    <h1 class="text-center text-4xl font-bold mb-5">性价比散点图</h1>
+    <h1 class="text-center text-4xl font-bold mb-5">Cost-effectiveness Scatterplot</h1>
 
     <div class="row mb-4">
       <div class="col-sm-4">
@@ -70,7 +70,7 @@
       </div>
     </div>
 
-    <p>每一个点都代表真实的球员。分界线由数据回归得出</p>
+    <p>Each point represents a player. The boundary line is computed from regression.</p>
 
     <div id="chart-area" class="chart-container bg-gray-50 border rounded p-4"></div>
     <div id="fixed-y-axis"></div>

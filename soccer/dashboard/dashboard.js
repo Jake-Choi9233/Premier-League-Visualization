@@ -109,14 +109,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function setupEventListeners() {
-        // 球队选择
+        // Team selection
         d3.select('#team-select').on('change', function() {
             const team = this.value;
-            document.getElementById('team-name').textContent = '球队信息';
+            document.getElementById('team-name').textContent = 'Team Info';
             renderTeamPlayers(team);
         });
 
-        // 关闭详情
+        // Close detail
         document.querySelector('.close-btn').addEventListener('click', () => {
             document.getElementById('player-detail').classList.add('hidden');
         });
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const players = allPlayers.filter(p => p.squad === team);
         const gkPlayers = allGK.filter(p => p.squad === team);
 
-        // 绘制球员
+        // Render players
         for (var i = 0; i < players.length; i++) {
             console.log(players[i].pos, players[i].main_pos);
         }
@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 exit => exit.remove()
         );
 
-        // 绘制GK
+        // Render GK
         container.selectAll('.gk-marker')
             .data(gkPlayers, d => d.player)
             .join(

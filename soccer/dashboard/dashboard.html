@@ -1,41 +1,55 @@
 <!-- index.html -->
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>足球数据可视化系统</title>
+    <title>Premier League Player Dashboard</title>
     <link rel="stylesheet" href="dashboard.css">
     <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
-    <!-- 导航栏 -->
+    <!-- Navigation -->
     <nav class="navbar">
-        <a href="dashboard.html" class="active">首页</a>
-        <a href="../sphere_graph/sphere.html">贡献度3D可视化</a>
-        <a href="../salary/salary.html">球员薪资分析</a>
-        <a href="../salary/salary_ratio.html">性价比分析</a>
+        <a href="dashboard.html" class="active">Dashboard</a>
+        <a href="../sphere_graph/sphere.html">Sphere / Sunburst</a>
+        <a href="../salary/salary.html">Wages</a>
+        <a href="../salary/salary_ratio.html">Cost-effectiveness</a>
     </nav>
 
-    <!-- 主界面 -->
+    <!-- Main -->
     <div class="content"><div class="container">
-        <!-- 球场视图 -->
+        <!-- Pitch view -->
         <div class="dashboard">
-            <select id="team-select" class="team-selector">
-                <option value="">选择球队</option>
-            </select>
-            <div class="team-info"
-                onclick="window.location.href=
-                    'team.html?team=' + encodeURIComponent(document.getElementById('team-select').value)">
-                <!-- <img id="team-logo" src="" alt="球队徽标"> -->
-                <span id="team-name">请选择球队</span>
+            <div class="dashboard-top">
+                <div class="team-panel">
+                    <select id="team-select" class="team-selector">
+                        <option value="">Select a team</option>
+                    </select>
+                    <div class="team-info"
+                        onclick="window.location.href=
+                            'team.html?team=' + encodeURIComponent(document.getElementById('team-select').value)">
+                        <!-- <img id="team-logo" src="" alt="Team logo"> -->
+                        <span id="team-name">Select a team</span>
+                    </div>
+                    <p class="helper-text">Pick a club and click any player to open their profile.</p>
+                </div>
+                <div class="intro-panel">
+                    <div class="intro-eyebrow">Premier League 2024–25</div>
+                    <h1 class="intro-title">Find the bargain stars hiding in plain sight</h1>
+                    <p class="intro-lead">A quick visual scouting report that turns stats into stories.</p>
+                    <ul class="intro-list">
+                        <li><span class="pill">Sphere / Sunburst</span> Explore how each player contributes to the team, and who carries the biggest share.</li>
+                        <li><span class="pill">Wages</span> Compare weekly and annual wages by country, team, and position.</li>
+                        <li><span class="pill">Cost-effectiveness</span> See who is undervalued and who is overvalued.</li>
+                    </ul>
+                </div>
             </div>
-            <p>选择一只你喜欢的队伍，球员将按位置分布，右边为对方球门。点击“球队信息”进入队伍页面。</p>
 
             <div class="pitch-container">
                 <img src="img/pitch.jpg" class="pitch-bg">
                 <div id="player-markers">
-                    <!-- 动态生成位置标记 -->
+                    <!-- Dynamic position markers -->
                     <div class="position-line df-line"></div>
                     <div class="position-line mf-line"></div>
                     <div class="position-line fw-line"></div>
@@ -43,9 +57,9 @@
             </div>
         </div>
 
-        <!-- 球员详情 -->
+        <!-- Player detail -->
         <div id="player-detail" class="player-detail hidden">
-            <button class="close-btn">×</button>
+            <button class="close-btn">Close</button>
             <div class="player-header"></div>
             <div class="radar-container"></div>
             <div class="stats-grid"></div>

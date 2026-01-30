@@ -1,29 +1,29 @@
-// 解析URL以获取队名
+// Read team from URL
 const urlParams = new URLSearchParams(window.location.search);
 const teamNameFromUrl = urlParams.get('team');
 
 if (!teamNameFromUrl) {
-    console.error('队名未在URL中提供');
+    console.error('Team name not provided in URL');
 }
 
-// 使用Fetch API获取Excel文件
+// Fetch Excel data
 fetch('con_merge.xlsx')
     .then(response => response.arrayBuffer())
     .then(data => {
-        // 使用SheetJS读取Excel文件
+        // Read Excel with SheetJS
         const workbook = XLSX.read(data, { type: 'array' });
-        const sheetName = workbook.SheetNames[0]; // 假设数据在第一个工作表中
+        const sheetName = workbook.SheetNames[0]; // Assume first sheet
         const worksheet = workbook.Sheets[sheetName];
         const json = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
-        // 查找匹配的队名
+        // Find matching team
         let teamData = null;
         const players = [];
 
-        for (let i = 1; i < json.length; i++) { // 假设第一行是表头
-            if (json[i][2] === teamNameFromUrl) { // 假设第三列是Squad（球队名字）
-                const squadAnnualWages = json[i][8]; // 假设第九列是Squad Annual Wages
-                const teamLogo = json[i][3]; // 假设第四列是Squad picture（球队徽标）
+        for (let i = 1; i < json.length; i++) { // Assume header row at index 0
+            if (json[i][2] === teamNameFromUrl) { // Column 3: Squad
+                const squadAnnualWages = json[i][8]; // Column 9: Squad Annual Wages
+                const teamLogo = json[i][3]; // Column 4: Squad logo
 
                 teamData = {
                     name: teamNameFromUrl,
@@ -31,40 +31,64 @@ fetch('con_merge.xlsx')
                     annual_wages: squadAnnualWages
                 };
 
-                // 收集球队的球员信息
+                // Collect player info
                 players.push({
-                    name: json[i][0], // 球员名字
-                    picture: json[i][1], // 球员图片
-                    position: json[i][4], // 球员位置
-                    contribution: json[i][6], // 球员贡献值
-                    annual_wages: json[i][7] // 球员工资
+                    name: json[i][0], // Player name
+                    picture: json[i][1], // Player image
+                    position: json[i][4], // Player position
+                    contribution: json[i][6], // Contribution
+                    annual_wages: json[i][7] // Wage
                 });
             }
         }
 
         if (!teamData) {
-            console.error('未找到指定的球队');
+            console.error('Team not found');
             return;
         }
 
-        // 更新HTML元素的内容
+        const formatUSD = (value) => {
+            if (value === null || value === undefined) return value;
+            const numeric = typeof value === 'number'
+                ? value
+                : Number(String(value).replace(/[^0-9.-]+/g, ''));
+            if (!Number.isFinite(numeric)) return value;
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                maximumFractionDigits: 0
+            }).format(numeric);
+        };
+
+        const formatNumber = (value) => {
+            const numeric = Number(value);
+            if (!Number.isFinite(numeric)) return value;
+            return new Intl.NumberFormat('en-US', { maximumFractionDigits: 3 }).format(numeric);
+        };
+
+        // Update UI
         document.getElementById('PI').innerText = players.length; 
         document.getElementById('team-logo').src = teamData.logo;
         document.getElementById('team-name').innerText = teamData.name;
-        document.getElementById('squad-annual-wages').innerText = teamData.annual_wages;
-        // 假设排名信息系统需要额外逻辑，这里暂时显示为"暂无数据"
-        document.getElementById('team-ranking').innerText = '暂无数据';
+        document.getElementById('squad-annual-wages').innerText = formatUSD(teamData.annual_wages);
+        // Ranking placeholder
+        document.getElementById('team-ranking').innerText = 'N/A';
 
-        // 展示球队球员列表
+        // Render roster
         const playerContainer = document.getElementById('player-container');
         players.forEach(player => {
             const playerItem = document.createElement('div');
             playerItem.className = 'player-item';
             playerItem.innerHTML = `
                 <img src="${player.picture}" alt="${player.name}">
-                <strong>${player.name}</strong> - ${player.position}
-                <p>贡献值: ${player.contribution}</p>
-                <p>年薪: ${player.annual_wages}</p>
+                <div class="player-meta">
+                    <div class="player-name">${player.name}</div>
+                    <div class="player-sub">${player.position}</div>
+                    <div class="player-stats">
+                        <div>Contribution: ${formatNumber(player.contribution)}</div>
+                        <div>Annual Wage: ${formatUSD(player.annual_wages)}</div>
+                    </div>
+                </div>
             `;
             playerContainer.appendChild(playerItem);
         });
