@@ -80,7 +80,7 @@ fetch('con_merge.xlsx')
             const playerItem = document.createElement('div');
             playerItem.className = 'player-item';
             playerItem.innerHTML = `
-                <img src="${player.picture}" alt="${player.name}">
+                <img src="${player.picture}" alt="${player.name}" onerror="this.onerror=null;this.src='img/smileface.png';">
                 <div class="player-meta">
                     <div class="player-name">${player.name}</div>
                     <div class="player-sub">${player.position}</div>
